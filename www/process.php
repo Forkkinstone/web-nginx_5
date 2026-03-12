@@ -2,6 +2,7 @@
 date_default_timezone_set('Europe/Kaliningrad');
 session_start();
 
+//подключение файлов для работы с бд и получение данных из формы
 require_once 'db.php';
 require_once 'Volunteer.php';
 
