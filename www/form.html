@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body{
+            padding-block-start: 50px;
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            font-family: Arial, sans-serief;
+        }
+
+        form{
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            background-color: whitesmoke;
+            padding: 5px;
+            border-radius: 12px;
+
+        }
+
+        form.visible{
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h2{
+            margin-top: 0;
+            color: black;
+        }
+
+        button:hover{  
+            background-color: rgb(137, 137, 218);
+        }
+
+    </style>
+    <meta charset="UTF-8">
+    <title>Lab_3 - Var_14</title>
+</head>
+<body>
+    <h2>Заявка в волонтёры</h2>
+
+    <form id="volunteerForm" action="process.php" method="POST">
+        Имя: <input type="text" name="userName" required><br><br>
+
+        Возраст: <input type="number" name="userAge" min="7" required><br><br>
+
+        Email: <input type="email" name="userEmail" placeholder="example@mail.com" required><br><br>
+
+        Направление: 
+        <select name="direction">
+            <option value="Экология">Экология</option>
+            <option value="Помощь детям">Помощь детям</option>
+            <option value="Приюты">Приюты</option>
+        </select><br><br>
+
+        <input type="checkbox" name="hasExperience"> Опыт есть<br><br>
+
+        Вид помощи:<br>
+        <input type="radio" name="helpType" value="Очно" checked> Очно<br>
+        <input type="radio" name="helpType" value="Удаленно"> Удаленно<br><br>
+
+        <button type="submit">Отправить</button>
+
+    </form>
+
+    <div id="result" style="margin-top: 20px;"></div>
+
+    <script>
+        window.addEventListener("load", function() {
+            document.getElementById("volunteerForm").classList.add("visible");
+        });
+    
+        document.getElementById("volunteerForm").addEventListener("submit", function(e) {
+
+            const name = this.userName.value;
+            alert(`Вы ввели имя: ${name}. Теперь данные обработает сервер`)
+
+        });
+
+        let inactivityTimer; 
+
+        function resetTimer() {
+            clearTimeout(inactivityTimer);
+            inactivityTimer = setTimeout(function() {
+                const nameInput = document.getElementsByName("userName")[0];
+                if (nameInput && nameInput.value === "") {
+                    alert("Пожалуйста, заполните форму! Мы очень ждем вашу заявку. ✨");
+                    }
+                }, 15000); 
+            }
+
+        const form = document.getElementById("volunteerForm");
+
+        form.addEventListener("keypress", resetTimer);
+        form.addEventListener("mousedown", resetTimer);
+
+        resetTimer();
+
+    </script>
+</body>
+</html>
